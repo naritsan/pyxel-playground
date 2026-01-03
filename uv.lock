@@ -1,0 +1,53 @@
+version = 1
+revision = 3
+requires-python = ">=3.12"
+
+[[package]]
+name = "pyrefly"
+version = "0.46.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/67/c2/f92ab45699f4e2ce2291fd81ec183a3f96ec6c72a1d03056644fdf4aa702/pyrefly-0.46.3.tar.gz", hash = "sha256:6aeb90698b587bba38ec870a515cf3499756fc81d73852fd11eaa10abda0fea6", size = 4769402, upload-time = "2025-12-30T23:58:16.473Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/00/ae/8257e96b2e6396880280e96b1ccda0242f19bbedbcc933443d6f56f81843/pyrefly-0.46.3-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:5626d345aa829dc17311c77c8019dfc7b9b6dd8da102b66d943d47862af2be59", size = 11662076, upload-time = "2025-12-30T23:57:55.765Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/7a/aba0dd3b0f9cb50fb3b39992960c1e04ae3498346c448ae041bff0d26337/pyrefly-0.46.3-py3-none-macosx_11_0_arm64.whl", hash = "sha256:13b553090ec9821a781198389564bcb3cb020679189272b1e88fddba9d613879", size = 11269927, upload-time = "2025-12-30T23:57:58.362Z" },
+    { url = "https://files.pythonhosted.org/packages/17/82/2a3ad9107229893207979d25b5eb98d8b71d3f43b28f349286b3b6630514/pyrefly-0.46.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6ad8612c2b8eaa36f3953ab3be8635bd91fd8179ddbdd9eb8bb4f1ad513ff3f0", size = 31501305, upload-time = "2025-12-30T23:58:00.998Z" },
+    { url = "https://files.pythonhosted.org/packages/11/10/b5f2c1eea63bee42f45480a17a72c31ca60b6c15024f1085459f4cd5d638/pyrefly-0.46.3-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:873d0c6a71cdd0399e1c6de1a3edbab34c7a9ae48e7a9e9ac327b1010d8686a1", size = 33721653, upload-time = "2025-12-30T23:58:03.703Z" },
+    { url = "https://files.pythonhosted.org/packages/af/7c/fe81b2c7e9e7edfe5ea9db00c79439e31c7110faad021ab451734722525e/pyrefly-0.46.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6fd55f0d864ead658607dc3be6649019cfb5d1c72ceb0818b4b3501e0eb81472", size = 34766036, upload-time = "2025-12-30T23:58:06.613Z" },
+    { url = "https://files.pythonhosted.org/packages/d1/c7/eff2558569533a11d1a21d73a366a85483bd38d80a12af1c7381218a6b62/pyrefly-0.46.3-py3-none-win32.whl", hash = "sha256:28e11eca9461fc892b19bdad799e280ab81cc00f5a712f89f7bc6b2e41a70194", size = 10738486, upload-time = "2025-12-30T23:58:09.316Z" },
+    { url = "https://files.pythonhosted.org/packages/be/84/8f545321cc0bb555992d4e4af0905dc907ef3e9e864d68c5504a46560bc6/pyrefly-0.46.3-py3-none-win_amd64.whl", hash = "sha256:1eb510fa62960bc30137e39360ef68b7c691eb28a6c958560088bc99595d63be", size = 11426143, upload-time = "2025-12-30T23:58:11.546Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/1d/5f9b3f6eba2a90a7859dc21905248f78f23d2bdd9e13cec791acb544a4b4/pyrefly-0.46.3-py3-none-win_arm64.whl", hash = "sha256:bb5db31d7781edc3a590fec380d50832faecfc57171c054512009c8254d5ad0f", size = 10977207, upload-time = "2025-12-30T23:58:13.812Z" },
+]
+
+[[package]]
+name = "pyxel"
+version = "2.5.10"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6a/19/076005a0fc3dcf480168180d35de2c2a7fcccfef304a41336683988ce40c/pyxel-2.5.10-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:01c269412590c7e16fc72d46f458ef5485ff44b65fedb35067b72a54d7b9eab7", size = 4848394, upload-time = "2025-11-07T04:20:40.453Z" },
+    { url = "https://files.pythonhosted.org/packages/58/27/0e5a2d7cda492512a84a51bdd1ec1d067a5caaadf584bcc2ebe56c2d6b0e/pyxel-2.5.10-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:fe03ff991041bac996f5e009cf43f0f052cc301538d6447464b6f1f5c41810c5", size = 4566797, upload-time = "2025-11-07T04:20:42.967Z" },
+    { url = "https://files.pythonhosted.org/packages/0e/6f/03bcf5c7ebb766c5d98ace656e3d996462cf307d2d29a7001952a14a0687/pyxel-2.5.10-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:80af2745d7363c282f50b00d3c3a9b7b95f55892b471329d88d53bfb86868e39", size = 4297614, upload-time = "2025-11-07T04:20:44.695Z" },
+    { url = "https://files.pythonhosted.org/packages/bf/ed/b491d0cf89ddcdfa5276048b358dffd3ab694f92f20080bdb9bee71f325e/pyxel-2.5.10-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:c720563f3d850c3a1ed498eaf9137ea54802d786c82f4073434741b13c60630b", size = 4306947, upload-time = "2025-11-07T04:20:46.654Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/07/d2f110899d93ed91cef452aaf255b9bc672be9b2210964ef3ede073729e4/pyxel-2.5.10-cp38-abi3-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:6552d43c53a6792e382d2df51ab7085a8f2dd5143bfac3be7f19ecea98dd8d4c", size = 4741179, upload-time = "2025-11-07T04:20:48.281Z" },
+    { url = "https://files.pythonhosted.org/packages/58/d1/b335362714e68d2695f2bc30056514efbafb1a7cfb0bf24a5cf769f985df/pyxel-2.5.10-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dc70a3e118d21069deeec5f2803dd9e332ace556a69c177de2c8a60a1257ad2c", size = 4476801, upload-time = "2025-11-07T04:20:49.864Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/6a/60b918408c0d09378222f10f91f6fd4d988d625339926aabc8938eb42d21/pyxel-2.5.10-cp38-abi3-win32.whl", hash = "sha256:aa7d65c4426965cc1c54efd42ce733d9b305c30f8b29730276c72fb86a7e73a3", size = 4340226, upload-time = "2025-11-07T04:20:51.047Z" },
+    { url = "https://files.pythonhosted.org/packages/98/00/4d815a91cd80794f5f940a14fd07df1c35ba1e5fccc3d350da3f20022b2e/pyxel-2.5.10-cp38-abi3-win_amd64.whl", hash = "sha256:57a54d2a4126803011f394b86563c813591417707e98db7211b01f1d14095639", size = 4519755, upload-time = "2025-11-07T04:20:52.687Z" },
+]
+
+[[package]]
+name = "pyxel-playground"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "pyxel" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pyrefly" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pyxel", specifier = ">=2.5.10" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pyrefly", specifier = ">=0.46.3" }]
