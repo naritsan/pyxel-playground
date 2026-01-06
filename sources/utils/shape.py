@@ -14,3 +14,11 @@ class Shape(ABC):
         This method must be implemented by all subclasses.
         """
         pass
+
+    @abstractmethod
+    def draw(self, col: int, fill: bool = False):
+        """
+        Draws the shape.
+        This method must be implemented by all subclasses.
+        """
+        pass

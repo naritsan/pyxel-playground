@@ -15,6 +15,7 @@ class Circle(Shape):
     def __init__(self, x: float, y: float, radius: float):
         self.center = Vector2(x, y)
         self.radius = radius
+        self._base_radius = radius
 
     def intersects(self, other: Shape) -> bool:
         if isinstance(other, Circle):
@@ -42,6 +43,15 @@ class Circle(Shape):
         dist_sq = (self.center.x - point.x)**2 + (self.center.y - point.y)**2
         return dist_sq <= self.radius**2
 
+    def set_scale(self, sx: float, sy: float):
+        """Sets the scale of the circle (affects radius)."""
+        # Absolute scaling from base radius
+        self.radius = self._base_radius * ((abs(sx) + abs(sy)) / 2)
+
+    def rotate(self, angle: float):
+        """Rotates the circle (no effect visually unless textured, but interface compliance)."""
+        pass
+
     def draw(self, col: int, fill: bool = False):
         """Draws the circle."""
         if fill:
@@ -57,6 +67,7 @@ class Capsule(Shape):
         self.start = start
         self.end = end
         self.radius = radius
+        self._base_radius = radius
 
     def intersects(self, other: Shape) -> bool:
         if isinstance(other, Circle):
@@ -100,6 +111,25 @@ class Capsule(Shape):
         dist_sq = (point.x - closest_point.x)**2 + (point.y - closest_point.y)**2
         return dist_sq <= (self.radius + expansion)**2
 
+    def rotate(self, angle: float):
+        """Rotates the capsule around its center."""
+        center = (self.start + self.end) * 0.5
+        
+        # Translate to origin, rotate, translate back
+        p1 = self.start - center
+        p2 = self.end - center
+        
+        p1 = p1.rotate(angle)
+        p2 = p2.rotate(angle)
+        
+        self.start = p1 + center
+        self.end = p2 + center
+
+    def set_scale(self, sx: float, sy: float):
+        """Sets scale. Implementation simplified (radius scaling)."""
+         # Absolute scaling from base radius
+        self.radius = self._base_radius * ((abs(sx) + abs(sy)) / 2)
+
     def draw(self, col: int, fill: bool = True):
         """Draws the capsule."""
         if fill:
@@ -107,18 +137,26 @@ class Capsule(Shape):
             pyxel.circ(self.end.x, self.end.y, self.radius, col)
             
             perp = (self.end - self.start).normalized().rotate(90) * self.radius
-            p1, p2 = self.start + perp, self.end + perp
-            p3, p4 = self.end - perp, self.start - perp
+            p1 = self.start + perp
+            p2 = self.end + perp
+            p3 = self.end - perp
+            p4 = self.start - perp
             
+            # Draw the body using triangles
             pyxel.tri(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, col)
             pyxel.tri(p1.x, p1.y, p3.x, p3.y, p4.x, p4.y, col)
         else:
+            # Draw outline (wireframe style)
+            # Ends
             pyxel.circb(self.start.x, self.start.y, self.radius, col)
             pyxel.circb(self.end.x, self.end.y, self.radius, col)
             
+            # Sides
             perp = (self.end - self.start).normalized().rotate(90) * self.radius
-            p1, p2 = self.start + perp, self.end + perp
-            p3, p4 = self.end - perp, self.start - perp
+            p1 = self.start + perp
+            p2 = self.end + perp
+            p3 = self.end - perp
+            p4 = self.start - perp
             
             pyxel.line(p1.x, p1.y, p2.x, p2.y, col)
             pyxel.line(p3.x, p3.y, p4.x, p4.y, col)
