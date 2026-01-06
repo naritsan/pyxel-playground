@@ -1,6 +1,8 @@
-# pyxel-playground
-pyxelでレトロ風ゲームを作ってみたいリポジトリ
 # Pyxel Playground
+
+pyxelでレトロ風ゲームを作ってみたいリポジトリ
+
+**Live Demo:** [https://naritsan.github.io/pyxel-playground/](https://naritsan.github.io/pyxel-playground/)
 
 Pyxel で様々な図形描画やゲームの試作を行うプレイグラウンドプロジェクトです。
 
@@ -22,12 +24,12 @@ uv run python run_shape_demo.py
 作成済みの `.pyxapp` ファイルを実行するには `pyxel play` コマンドを使用します。
 
 ```bash
-uv run pyxel play pages/shape_demo/shape_demo.pyxapp
+uv run pyxel play docs/pages/shape_demo/shape_demo.pyxapp
 ```
 
 ## パッケージ作成とデプロイ (Packaging & Deployment)
 
-Webブラウザ (Wasm) で動作させるために、アプリケーションをパッケージ化して `pages` ディレクトリに配置します。
+Webブラウザ (Wasm) で動作させるために、アプリケーションをパッケージ化して `docs/pages` ディレクトリに配置します。
 
 ### 1. 実行ファイル (.pyxapp) の作成
 インポート構造を維持するため、プロジェクトルート (`.`) を起点にパッケージ化します。
@@ -41,11 +43,11 @@ echo "from sources.shape_demo.shape_demo import App; App()" > run_shape_demo.py
 uv run pyxel package . run_shape_demo.py
 
 # 3. リネームして配置
-mv pyxel-playground.pyxapp pages/shape_demo/shape_demo.pyxapp
+mv pyxel-playground.pyxapp docs/pages/shape_demo/shape_demo.pyxapp
 
 # 4. 一時ファイルを削除
 rm run_shape_demo.py
 ```
-※ `pages/shape_demo/index.html` からはこのファイル名で参照するように設定します。
+※ `docs/pages/shape_demo/index.html` からはこのファイル名で参照するように設定します。
 
 pyxelでレトロ風ゲームを作ってみたいリポジトリ

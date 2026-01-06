@@ -182,11 +182,28 @@ class Polygon:
         ]
         return cls(vertices, x, y)
 
-    def draw(self, col: int):
-        """Draws the polygon using pyxel.line."""
+    def draw(self, col: int, fill: bool = False):
+        """Draws the polygon.
+        
+        Args:
+            col: Color index.
+            fill: If True, draws a filled polygon (using triangle fan from center).
+                  Note: Simple fan works for convex and star-shaped polygons. Complex concave ones may have artifacts.
+        """
         verts = self.get_transformed_vertices()
-        for i in range(len(verts)):
-            p1 = verts[i]
-            p2 = verts[(i + 1) % len(verts)]
-            pyxel.line(p1.x, p1.y, p2.x, p2.y, col)
+        center = self.position # Approximate center for fan
+
+        if fill:
+            # Triangle fan from center (self.position)
+            # This works well for the predefined shapes (Rect, Regular, Star, Heart, Arrow-ish)
+            # providing the center is inside the kernel of the shape.
+            for i in range(len(verts)):
+                p1 = verts[i]
+                p2 = verts[(i + 1) % len(verts)]
+                pyxel.tri(center.x, center.y, p1.x, p1.y, p2.x, p2.y, col)
+        else:
+            for i in range(len(verts)):
+                p1 = verts[i]
+                p2 = verts[(i + 1) % len(verts)]
+                pyxel.line(p1.x, p1.y, p2.x, p2.y, col)
 

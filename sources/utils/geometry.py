@@ -61,33 +61,41 @@ class Capsule:
         dist_sq = (point.x - closest_point.x)**2 + (point.y - closest_point.y)**2
         return dist_sq <= self.radius**2
 
-    def draw(self, col: int):
-        """Draws the capsule using circles and lines."""
-        # Draw circles at both ends
-        pyxel.circ(self.start.x, self.start.y, self.radius, col)
-        pyxel.circ(self.end.x, self.end.y, self.radius, col)
+    def draw(self, col: int, fill: bool = True):
+        """Draws the capsule.
         
-        # Draw the rectangle connecting them
-        perp = (self.end - self.start).normalized().rotate(90) * self.radius
-        
-        p1 = self.start + perp
-        p2 = self.end + perp
-        p3 = self.end - perp
-        p4 = self.start - perp
-        
-        # Draw sides only strictly, but filling is tricky with primitives without a custom shader or polygon fill
-        # For simplicity, we can draw a thick line or a polygon.
-        # Since this is "draw", let's use a nice polygon fill if available, or just lines.
-        # Pyxel doesn't have a thick line, so we can draw the bounding polygon.
-        
-        # Outline approach:
-        # pyxel.line(p1.x, p1.y, p2.x, p2.y, col)
-        # pyxel.line(p3.x, p3.y, p4.x, p4.y, col)
-        
-        # Simple debugging draw: line + circles is usually enough for visual approximation
-        pyxel.line(self.start.x, self.start.y, self.end.x, self.end.y, col) # Center line
-        
-        # Using the polygon approach for "body"
-        # Note: pyxel.tri can be used to fill, we need 2 triangles for the rect body
-        pyxel.tri(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, col)
-        pyxel.tri(p1.x, p1.y, p3.x, p3.y, p4.x, p4.y, col)
+        Args:
+            col: Color index.
+            fill: If True, draws a filled capsule. If False, draws a wireframe (internal lines may be visible).
+        """
+        if fill:
+            # Draw circles at both ends
+            pyxel.circ(self.start.x, self.start.y, self.radius, col)
+            pyxel.circ(self.end.x, self.end.y, self.radius, col)
+            
+            # Draw the rectangle connecting them
+            perp = (self.end - self.start).normalized().rotate(90) * self.radius
+            
+            p1 = self.start + perp
+            p2 = self.end + perp
+            p3 = self.end - perp
+            p4 = self.start - perp
+            
+            # Draw the body using triangles
+            pyxel.tri(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, col)
+            pyxel.tri(p1.x, p1.y, p3.x, p3.y, p4.x, p4.y, col)
+        else:
+            # Draw outline (wireframe style)
+            # Ends
+            pyxel.circb(self.start.x, self.start.y, self.radius, col)
+            pyxel.circb(self.end.x, self.end.y, self.radius, col)
+            
+            # Sides
+            perp = (self.end - self.start).normalized().rotate(90) * self.radius
+            p1 = self.start + perp
+            p2 = self.end + perp
+            p3 = self.end - perp
+            p4 = self.start - perp
+            
+            pyxel.line(p1.x, p1.y, p2.x, p2.y, col)
+            pyxel.line(p3.x, p3.y, p4.x, p4.y, col)
