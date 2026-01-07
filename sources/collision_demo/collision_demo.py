@@ -84,12 +84,12 @@ class App:
             self.player.end.y += dy
 
     def update(self):
-        # Toggle Animation
-        if pyxel.btnp(pyxel.KEY_SPACE):
+        # Toggle Animation (Space or Gamepad A)
+        if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
             self.is_animating = not self.is_animating
             
-        # Change Shape
-        if pyxel.btnp(pyxel.KEY_S):
+        # Change Shape (S or Gamepad Y)
+        if pyxel.btnp(pyxel.KEY_S) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_Y):
             self.shape_index = (self.shape_index + 1) % len(self.shapes_list)
             # Re-create player at current position
             # Note: For Polygon rotate/scale state is lost, but that avoids complex state transfer
@@ -106,10 +106,10 @@ class App:
         # Player Movement
         speed = 2.0
         dx, dy = 0, 0
-        if pyxel.btn(pyxel.KEY_UP): dy -= 1
-        if pyxel.btn(pyxel.KEY_DOWN): dy += 1
-        if pyxel.btn(pyxel.KEY_LEFT): dx -= 1
-        if pyxel.btn(pyxel.KEY_RIGHT): dx += 1
+        if pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_UP): dy -= 1
+        if pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN): dy += 1
+        if pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT): dx -= 1
+        if pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT): dx += 1
         
         # Normalize vector
         if dx != 0 or dy != 0:
@@ -118,8 +118,8 @@ class App:
         
         # Player Rotation (Polygon and Capsule)
         if isinstance(self.player, (Polygon, geo.Capsule)):
-            if pyxel.btn(pyxel.KEY_Z): self.player.rotate(-3)
-            if pyxel.btn(pyxel.KEY_X): self.player.rotate(3)
+            if pyxel.btn(pyxel.KEY_Z) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_LEFTSHOULDER): self.player.rotate(-3)
+            if pyxel.btn(pyxel.KEY_X) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_RIGHTSHOULDER): self.player.rotate(3)
 
         # Obstacle Animation
         if self.is_animating:
@@ -194,10 +194,10 @@ class App:
 
         # HUD
         c = 7
-        pyxel.text(5, 5, f"Shape: {self.shapes_list[self.shape_index]} (S)", c)
-        pyxel.text(5, 12, "Anim: " + ("ON" if self.is_animating else "OFF") + " (Space)", c)
-        pyxel.text(5, 19, "Z/X: Rotate", c)
-        pyxel.text(5, 26, "Arrows: Move", c)
+        pyxel.text(5, 5, f"Shape: {self.shapes_list[self.shape_index]} (S/Y)", c)
+        pyxel.text(5, 12, "Anim: " + ("ON" if self.is_animating else "OFF") + " (Space/A)", c)
+        pyxel.text(5, 19, "Z/X or LB/RB: Rotate", c)
+        pyxel.text(5, 26, "Arrows/D-Pad: Move", c)
         
         if self.is_colliding:
             pyxel.text(135, 5, "HIT!", 8)
