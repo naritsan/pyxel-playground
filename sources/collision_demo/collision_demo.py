@@ -75,13 +75,9 @@ class App:
         if isinstance(self.player, Polygon):
             self.player.translate(dx, dy)
         elif isinstance(self.player, geo.Circle):
-            self.player.center.x += dx
-            self.player.center.y += dy
+            self.player.translate(dx, dy)
         elif isinstance(self.player, geo.Capsule):
-            self.player.start.x += dx
-            self.player.start.y += dy
-            self.player.end.x += dx
-            self.player.end.y += dy
+            self.player.translate(dx, dy)
 
     def update(self):
         # Toggle Animation (Space or Gamepad A)
@@ -163,7 +159,7 @@ class App:
                 self.obstacles[4].set_scale(scale4, scale4)
                 # Still moving? Let's keep moving too for fun
                 move_x = math.sin(self.frame_count * 0.05) * 1.0
-                self.obstacles[4].center.x += move_x
+                self.obstacles[4].translate(move_x, 0)
 
             # Capsule(5): Phase 2.5
             if len(self.obstacles) > 5:

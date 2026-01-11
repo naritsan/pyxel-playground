@@ -3,7 +3,7 @@ import pyxel
 import math
 from .vector2 import Vector2
 from .shape import Shape
-from . import geometry  # Local module import to handle circular dependency safely
+from . import geometry  # 循環参照を安全に処理するためのローカルインポート
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -11,26 +11,26 @@ if TYPE_CHECKING:
 
 class Polygon(Shape):
     """
-    A class to represent a 2D polygon with multiple vertices.
-    Manages local vertices and applies transformations (scale, rotation, translation)
-    to calculate world coordinates.
+    複数の頂点を持つ2Dポリゴンを表すクラス。
+    ローカル頂点を管理し、トランスフォーム（スケール、回転、移動）を適用して
+    ワールド座標を計算する。
     """
 
     def __init__(self, vertices: list[Vector2], x: float = 0, y: float = 0):
-        # Local coordinates (relative to the center/origin of the shape)
+        # ローカル座標（図形の中心/原点からの相対座標）
         self.local_vertices: list[Vector2] = vertices
         
-        # World state
+        # ワールド状態
         self.position: Vector2 = Vector2(x, y)
-        self.rotation: float = 0.0  # Degrees
+        self.rotation: float = 0.0  # 度単位
         self.scale: Vector2 = Vector2(1.0, 1.0)
 
     def get_transformed_vertices(self) -> list[Vector2]:
         """
-        Returns a list of vertices transformed by the current scale, rotation, and position.
-        Order of operations: Scale -> Rotate -> Translate
+        現在のスケール、回転、位置でトランスフォームされた頂点リストを返す。
+        適用順序: スケール → 回転 → 移動
         """
-        # Pre-calculate rotation trigonometry
+        # 回転の三角関数を事前計算
         rad = math.radians(self.rotation)
         cos_theta = math.cos(rad)
         sin_theta = math.sin(rad)
@@ -38,17 +38,17 @@ class Polygon(Shape):
         world_vertices = []
 
         for v in self.local_vertices:
-            # 1. Scale
+            # 1. スケール
             sx = v.x * self.scale.x
             sy = v.y * self.scale.y
 
-            # 2. Rotate
+            # 2. 回転
             # x' = x*cos - y*sin
             # y' = x*sin + y*cos
             rx = sx * cos_theta - sy * sin_theta
             ry = sx * sin_theta + sy * cos_theta
 
-            # 3. Translate (Add position)
+            # 3. 移動（位置を加算）
             wx = rx + self.position.x
             wy = ry + self.position.y
 
@@ -57,20 +57,20 @@ class Polygon(Shape):
         return world_vertices
 
     def translate(self, dx: float, dy: float):
-        """Moves the polygon properly."""
+        """ポリゴンを移動する。"""
         self.position += Vector2(dx, dy)
 
     def rotate(self, angle: float):
-        """Rotates the polygon by the specified angle (in degrees)."""
+        """ポリゴンを指定した角度（度単位）で回転する。"""
         self.rotation += angle
 
     def set_scale(self, sx: float, sy: float):
-        """Sets the scale of the polygon."""
+        """ポリゴンのスケールを設定する。"""
         self.scale = Vector2(sx, sy)
 
     @classmethod
     def create_rect(cls, width: float, height: float, x: float = 0, y: float = 0) -> Polygon:
-        """Creates a rectangle centered at (x, y)."""
+        """(x, y)を中心とした矩形を作成する。"""
         hw = width / 2
         hh = height / 2
         vertices = [
@@ -81,9 +81,9 @@ class Polygon(Shape):
 
     @classmethod
     def create_regular_polygon(cls, sides: int, radius: float, x: float = 0, y: float = 0, angle_offset: float = -90) -> Polygon:
-        """Creates a regular polygon."""
+        """正多角形を作成する。"""
         if sides < 3:
-            raise ValueError("Polygon must have at least 3 sides.")
+            raise ValueError("ポリゴンは少なくとも3辺必要です。")
         vertices = []
         angle_step = 360 / sides
         for i in range(sides):
@@ -96,7 +96,7 @@ class Polygon(Shape):
 
     @classmethod
     def create_star(cls, points: int, outer_radius: float, inner_radius: float, x: float = 0, y: float = 0) -> Polygon:
-        """Creates a star shape."""
+        """星形を作成する。"""
         vertices = []
         angle_step = 180 / points
         angle_offset = -90
@@ -111,7 +111,7 @@ class Polygon(Shape):
 
     @classmethod
     def create_heart(cls, scale: float = 1.0, x: float = 0, y: float = 0) -> Polygon:
-        """Creates a heart shape."""
+        """ハート形を作成する。"""
         vertices = [
             Vector2(0, -0.25), Vector2(0.3, -0.6), Vector2(0.7, -0.6),
             Vector2(0.9, -0.3), Vector2(0.9, 0.1), Vector2(0, 0.8),
@@ -123,7 +123,7 @@ class Polygon(Shape):
 
     @classmethod
     def create_arrow(cls, length: float, head_size: float, shaft_width: float, x: float = 0, y: float = 0) -> Polygon:
-        """Creates an arrow pointing up."""
+        """上向きの矢印を作成する。"""
         hw, sw, l = head_size / 2, shaft_width / 2, length / 2
         vertices = [
             Vector2(0, -l - hw), Vector2(hw, -l + hw), Vector2(sw, -l + hw),
@@ -132,7 +132,7 @@ class Polygon(Shape):
         return cls(vertices, x, y)
 
     def draw(self, col: int, fill: bool = False):
-        """Draws the polygon."""
+        """ポリゴンを描画する。"""
         verts = self.get_transformed_vertices()
         center = self.position
         if fill:
@@ -156,7 +156,7 @@ class Polygon(Shape):
         return False
 
     def _intersects_polygon(self, other: Polygon) -> bool:
-        """Checks if this polygon intersects with another polygon using SAT."""
+        """SATを使用してポリゴン同士の交差を判定する。"""
         axes = self.get_axes() + other.get_axes()
         for axis in axes:
             min1, max1 = self.project(axis)
@@ -166,7 +166,7 @@ class Polygon(Shape):
         return True
 
     def _intersects_circle(self, other: geometry.Circle) -> bool:
-        """Checks intersection with a circle using SAT."""
+        """SATを使用して円との交差を判定する。"""
         verts = self.get_transformed_vertices()
         center = other.center
         
@@ -191,12 +191,12 @@ class Polygon(Shape):
         return True
 
     def _intersects_capsule(self, other: geometry.Capsule) -> bool:
-        """Checks intersection with a capsule."""
-        # Check endpoints
+        """カプセルとの交差を判定する。"""
+        # 端点をチェック
         if self._intersects_circle(geometry.Circle(other.start.x, other.start.y, other.radius)): return True
         if self._intersects_circle(geometry.Circle(other.end.x, other.end.y, other.radius)): return True
             
-        # Check body approximate (SAT with simplified axes)
+        # ボディ部分の近似判定（簡略化したSAT）
         axes = self.get_axes()
         cap_dir = other.get_direction()
         if cap_dir.x != 0 or cap_dir.y != 0:
@@ -211,7 +211,7 @@ class Polygon(Shape):
         return True
 
     def get_axes(self) -> list[Vector2]:
-        """Returns a list of normal vectors for all edges of the polygon."""
+        """ポリゴンの全辺に対する法線ベクトルのリストを返す。"""
         axes = []
         verts = self.get_transformed_vertices()
         for i in range(len(verts)):
@@ -222,7 +222,7 @@ class Polygon(Shape):
         return axes
 
     def project(self, axis: Vector2) -> tuple[float, float]:
-        """Projects the polygon onto the given axis."""
+        """ポリゴンを指定した軸に射影する。"""
         verts = self.get_transformed_vertices()
         if not verts: return 0.0, 0.0
         min_proj = max_proj = verts[0].dot(axis)

@@ -2,13 +2,13 @@ from __future__ import annotations
 import math
 
 class Vector2:
-    """A 2D vector class for game development."""
+    """ゲーム開発用の2Dベクトルクラス。"""
 
     def __init__(self, x: float, y: float):
         self.x: float = x
         self.y: float = y
 
-    # --- Arithmetic Operations ---
+    # --- 算術演算 ---
 
     def __add__(self, other: Vector2) -> Vector2:
         return Vector2(self.x + other.x, self.y + other.y)
@@ -17,20 +17,20 @@ class Vector2:
         return Vector2(self.x - other.x, self.y - other.y)
 
     def __mul__(self, scalar: float) -> Vector2:
-        """Scalar multiplication."""
+        """スカラー倍。"""
         return Vector2(self.x * scalar, self.y * scalar)
 
     def __rmul__(self, scalar: float) -> Vector2:
-        """Reverse scalar multiplication (scalar * vector)."""
+        """逆方向のスカラー倍（scalar * vector）。"""
         return self.__mul__(scalar)
 
     def __truediv__(self, scalar: float) -> Vector2:
-        """Scalar division."""
+        """スカラー除算。"""
         if scalar == 0:
-             raise ZeroDivisionError("Cannot divide Vector2 by zero.")
+             raise ZeroDivisionError("Vector2をゼロで割ることはできません。")
         return Vector2(self.x / scalar, self.y / scalar)
 
-    # --- Comparison and Representation ---
+    # --- 比較と表現 ---
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Vector2):
@@ -43,39 +43,39 @@ class Vector2:
     def __str__(self) -> str:
         return f"({self.x}, {self.y})"
 
-    # --- Vector Operations ---
+    # --- ベクトル演算 ---
 
     def magnitude(self) -> float:
-        """Returns the length (magnitude) of the vector."""
+        """ベクトルの長さ（大きさ）を返す。"""
         return math.hypot(self.x, self.y)
 
     def dot(self, other: Vector2) -> float:
-        """Returns the dot product."""
+        """内積を返す。"""
         return (self.x * other.x) + (self.y * other.y)
 
     def cross(self, other: Vector2) -> float:
-        """Returns the cross product (determinant/wedge product value)."""
+        """外積（2Dでは行列式の値）を返す。"""
         return (self.x * other.y) - (self.y * other.x)
 
     def normalized(self) -> Vector2:
-        """Returns a unit vector with the same direction."""
+        """同じ方向の単位ベクトルを返す。"""
         mag = self.magnitude()
         if mag == 0:
             return Vector2(0, 0)
         return Vector2(self.x / mag, self.y / mag)
 
     def proj(self, other: Vector2) -> Vector2:
-        """Projects this vector onto another vector."""
+        """このベクトルを別のベクトルに射影した結果を返す。"""
         n = other.normalized()
         length = self.dot(n)
         return n * length
 
     def perp(self, other: Vector2) -> Vector2:
-        """Returns the component of this vector perpendicular to the other vector."""
+        """このベクトルの、別のベクトルに垂直な成分を返す。"""
         return self - self.proj(other)
 
     def rotate(self, degrees: float) -> Vector2:
-        """Rotates the vector by a given angle in degrees. Returns a new Vector2."""
+        """ベクトルを度単位で回転させ、新しいVector2を返す。"""
         rad = math.radians(degrees)
         cos = math.cos(rad)
         sin = math.sin(rad)
@@ -84,5 +84,5 @@ class Vector2:
         return Vector2(new_x, new_y)
 
     def scale(self, sx: float, sy: float) -> Vector2:
-        """Scales the vector non-uniformly by sx and sy. Returns a new Vector2."""
+        """ベクトルをsx, syで非一様にスケールし、新しいVector2を返す。"""
         return Vector2(self.x * sx, self.y * sy)
